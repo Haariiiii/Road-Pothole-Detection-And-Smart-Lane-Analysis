@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Road Safety Detection System</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>Road Safety Detection</h1>
+            </div>
+            <p class="tagline">Smart Pothole Detection & Lane Departure Warning System</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Mode Selection Cards -->
+            <div class="mode-selection" id="modeSelection">
+                <h2 class="section-title">Choose Your Detection Mode</h2>
+                <div class="cards-container">
+
+                    <!-- Upload Video Card -->
+                    <div class="card" id="uploadCard" onclick="selectMode('upload')">
+                        <div class="card-shine"></div>
+                        <div class="card-content">
+                            <div class="card-icon-wrapper">
+                                <div class="card-icon-bg"></div>
+                                <svg class="card-svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polygon points="23 7 16 12 23 17 23 7" />
+                                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+                                </svg>
+                            </div>
+                            <div class="card-text">
+                                <h3>Upload Video</h3>
+                                <p>Analyze recorded dashcam footage for potholes and lane hazards</p>
+                            </div>
+                            <div class="card-bottom">
+                                <div class="card-tags">
+                                    <span class="tag">MP4</span>
+                                    <span class="tag">AVI</span>
+                                    <span class="tag">MOV</span>
+                                </div>
+                                <div class="card-arrow">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14" />
+                                        <path d="m12 5 7 7-7 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Camera Card -->
+                    <div class="card" id="mobileCard" onclick="selectMode('mobile')">
+                        <div class="card-shine"></div>
+                        <div class="card-content">
+                            <div class="card-icon-wrapper">
+                                <div class="card-icon-bg"></div>
+                                <svg class="card-svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                                    <circle cx="12" cy="13" r="4" />
+                                </svg>
+                            </div>
+                            <div class="card-text">
+                                <h3>Live Camera</h3>
+                                <p>Real-time pothole detection using your mobile camera via iVCam</p>
+                            </div>
+                            <div class="card-bottom">
+                                <div class="card-tags">
+                                    <span class="tag live-tag">
+                                        <span class="live-dot"></span>
+                                        Live Feed
+                                    </span>
+                                </div>
+                                <div class="card-arrow">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14" />
+                                        <path d="m12 5 7 7-7 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Upload Video Panel -->
+            <div class="panel hidden" id="uploadPanel">
+                <button class="back-btn" onclick="goBack()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m12 19-7-7 7-7" />
+                        <path d="M19 12H5" />
+                    </svg>
+                    Back
+                </button>
+                <h2>Upload Video</h2>
+
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">
+                        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" y1="3" x2="12" y2="15" />
+                        </svg>
+                    </div>
+                    <p class="upload-text">Drag & drop your video here or</p>
+                    <label class="browse-btn">
+                        Browse Files
+                        <input type="file" id="videoInput" accept="video/*" onchange="handleFileSelect(event)">
+                    </label>
+                    <p class="file-types">Supports: MP4, AVI, MOV, MKV</p>
+                </div>
+
+                <div class="selected-file hidden" id="selectedFile">
+                    <div class="file-info">
+                        <span class="file-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#818cf8"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="23 7 16 12 23 17 23 7" />
+                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+                            </svg>
+                        </span>
+                        <span class="file-name" id="fileName"></span>
+                        <button class="remove-btn" onclick="removeFile()">×</button>
+                    </div>
+                </div>
+
+                <button class="start-btn" id="startUploadBtn" disabled onclick="startProcessing('upload')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                    Start Detection
+                </button>
+            </div>
+
+            <!-- Mobile Connection Panel -->
+            <div class="panel hidden" id="mobilePanel">
+                <button class="back-btn" onclick="goBack()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m12 19-7-7 7-7" />
+                        <path d="M19 12H5" />
+                    </svg>
+                    Back
+                </button>
+                <h2>Connect Mobile Camera</h2>
+
+                <div class="connection-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Install iVCam</h4>
+                            <p>Download iVCam on your phone and PC</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Connect to Same Network</h4>
+                            <p>Ensure both devices are on the same WiFi</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Start iVCam</h4>
+                            <p>Open iVCam on both devices to connect</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="camera-select">
+                    <label for="cameraIndex">Camera Index:</label>
+                    <select id="cameraIndex">
+                        <option value="0">Camera 0 (Default)</option>
+                        <option value="1">Camera 1 (iVCam)</option>
+                        <option value="2">Camera 2</option>
+                    </select>
+                </div>
+
+                <div class="connection-status" id="connectionStatus">
+                    <div class="status-dot"></div>
+                    <span>Ready to connect</span>
+                </div>
+
+                <button class="start-btn" onclick="startProcessing('mobile')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 12a9 9 0 0 1 8 8" />
+                        <path d="M2 16a5 5 0 0 1 4 4" />
+                        <line x1="2" y1="20" x2="2.01" y2="20" />
+                        <path d="M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6" />
+                    </svg>
+                    Connect & Start Detection
+                </button>
+            </div>
+
+            <!-- Processing Panel -->
+            <div class="panel hidden" id="processingPanel">
+                <div class="processing-header">
+                    <h2>Detection in Progress</h2>
+                    <div class="header-controls" style="display: flex; gap: 15px; align-items: center;">
+                        <button class="mute-btn" id="muteBtn" onclick="toggleAlerts()">
+                            <svg id="muteIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                            </svg>
+                            <span id="muteText">Alerts On</span>
+                        </button>
+                        <button class="stop-btn" onclick="stopProcessing()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                                <rect x="4" y="4" width="16" height="16" rx="2" />
+                            </svg>
+                            Stop
+                        </button>
+                    </div>
+                </div>
+
+                <div class="video-container">
+                    <img id="videoFeed" src="" alt="Video Feed">
+                    <div class="video-overlay" id="videoOverlay">
+                        <div class="loading-spinner"></div>
+                        <p id="connectionStatus">Starting detection...</p>
+                    </div>
+                </div>
+
+                <div class="stats-container">
+                    <div class="stat-card pothole-stat">
+                        <div class="stat-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+                                <path d="M12 9v4" />
+                                <path d="M12 17h.01" />
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="potholeStatus">Safe</span>
+                            <span class="stat-label">Road Status</span>
+                        </div>
+                    </div>
+                    <div class="stat-card count-stat">
+                        <div class="stat-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 20h9" />
+                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="potholeCount">0</span>
+                            <span class="stat-label">Potholes Found</span>
+                        </div>
+                    </div>
+                    <div class="stat-card lane-stat">
+                        <div class="stat-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+                                <line x1="4" y1="22" x2="4" y2="15" />
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="laneStatus">Normal</span>
+                            <span class="stat-label">Lane Status</span>
+                        </div>
+                    </div>
+                    <div class="stat-card offset-stat">
+                        <div class="stat-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="offsetValue">0.00m</span>
+                            <span class="stat-label">Lane Offset</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Session Summary Modal -->
+        <div class="summary-overlay hidden" id="summaryOverlay">
+            <div class="summary-modal">
+                <div class="summary-header">
+                    <h2>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="vertical-align: -4px; margin-right: 8px;">
+                            <path d="M3 3v18h18" />
+                            <path d="m19 9-5 5-4-4-3 3" />
+                        </svg>
+                        Session Summary
+                    </h2>
+                </div>
+                <div class="summary-body">
+                    <div class="summary-stat main-stat">
+                        <span class="summary-stat-label">Total Potholes Detected</span>
+                        <span class="summary-stat-value" id="summaryTotalPotholes">0</span>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-stats-grid">
+                        <div class="summary-stat">
+                            <span class="summary-stat-label">Avg Confidence</span>
+                            <span class="summary-stat-value accent" id="summaryAvgConf">—</span>
+                        </div>
+                        <div class="summary-stat">
+                            <span class="summary-stat-label">Min Confidence</span>
+                            <span class="summary-stat-value" id="summaryMinConf">—</span>
+                        </div>
+                        <div class="summary-stat">
+                            <span class="summary-stat-label">Max Confidence</span>
+                            <span class="summary-stat-value" id="summaryMaxConf">—</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="summary-close-btn" onclick="closeSummary()">Close & Return</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Final Year Project — Road Pothole Detection & Smart Lane Deviation Analysis</p>
+        </footer>
+    </div>
+
+    <script src="static/script.js?v=2"></script>
+</body>
+
+</html>

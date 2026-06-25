@@ -1,0 +1,28 @@
+# Virtual Environment
+env/
+venv/
+ENV/
+
+# Python caching
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE and Editor files
+.vscode/
+.idea/
+
+# Local data and uploads
+uploads/*
+!uploads/.gitkeep
+
+# Operating system files
+Thumbs.db
+Desktop.ini
+
+# Large unused models (exceeding GitHub's 100MB limit)
+models/tusimple_18.pth
+models/ufld_carla_best.pth
+
+models/
+test_videos/

@@ -1,0 +1,5 @@
+train: C:/Users/Abhi/OneDrive/Desktop/Pothole/Shadows/train/images
+val: C:/Users/Abhi/OneDrive/Desktop/Pothole/Shadows/train/images
+
+nc: 1
+names: ['pothole']
